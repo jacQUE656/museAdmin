@@ -8,7 +8,7 @@ export const assets = {
 export const SIDE_MENU_DATA =[
 {
     id: "01",
-    label: "Song",
+    label: "Add Song",
     icon : Music,
     path : "/add-song"
     
