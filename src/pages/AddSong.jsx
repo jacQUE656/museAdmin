@@ -1,7 +1,7 @@
 import DashboardLayout from "../layout/DashboardLayout";
 import { useEffect, useState } from "react";
 import { Check, Image, Music } from "lucide-react";
-import { albumsAPI } from "../services/ApiService";
+import { albumsAPI, songsAPI } from "../services/ApiService";
 import toast from "react-hot-toast";
 
 
@@ -15,24 +15,39 @@ const AddSong = () => {
   const [album, setAlbum] = useState("none");
   const [albumData, setAlbumData] = useState([]);
 
-  const onSubmitHandler = async (e) => {
-    // e.preventDefault();
-    // setLoading(true);
-    // try {
-    //   const formData = new FormData();
-    //   const request = {
-    //     name,
-    //     description,
+ const onSubmitHandler = async (e) => { 
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      const request = {
+        name,
+        description,
+        album
 
-    //   }
-    //   formData.append("request");
-    //   formData.append("file");
+      }
+      formData.append("request" , JSON.stringify(request));
+      formData.append("audio" ,song);
+        formData.append("image" ,image);
+      const response = await songsAPI.add(formData);
+      if (response.status === 201) {
+        toast.success("Song successfully added!");
+        setName("");
+         setDescription("");
+          setImage(false);
+          setAlbum("none");
+          setSong(false);
+      }else{
+        toast.error('Something went wrong while adding song pleae try again')
+      }
 
-    // } catch (error) {
+    } catch (error) {
+              toast.error('Error adding song pleae try again')
 
-    // }
+    }finally{
+      setLoading(false);
+    }
   }
-
   const loadAlbumData = async () => {
     try {
       const response = await albumsAPI.list();

@@ -27,7 +27,7 @@ const AddAlbum = () => {
       formData.append("file" ,image);
       const response = await albumsAPI.add(formData);
       if (response.status === 201) {
-        toast.success("Album added!");
+        toast.success("Album successfully added!");
         setName("");
          setDescription("");
           setImage(false);
