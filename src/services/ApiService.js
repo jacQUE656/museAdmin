@@ -59,6 +59,12 @@ export const albumsAPI = {
     list: ()=> apiClient.get('/api/albums'),
     remove:(id) => apiClient.delete(`/api/albums/${id}`)
 }
+export const userAPI = {
+    add: ()=> apiClient.post('/api/user'),
+    list: ()=> apiClient.get('/api/user'),
+    delete:(id) => apiClient.delete(`/api/user/${id}`)
+}
+
 
 
 export default apiClient;

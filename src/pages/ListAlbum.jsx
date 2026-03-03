@@ -8,6 +8,7 @@ const ListAlbum = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const admin = localStorage.getItem("adminUser");
+  
   const fetchAlbums = async () => {
     setLoading(true);
     try {

@@ -5,6 +5,7 @@ import AddSong from "./AddSong";
 import ListSong from './ListAlbum';
 import AddAlbum from './AddAlbum';
 import ListAlbum from './ListAlbum';
+import ListUsers from './ListUsers';
 const Display = () => {
     
     return (
@@ -18,6 +19,7 @@ const Display = () => {
                     <Route path="/list-songs" element={<ListSong />} />
                     <Route path="/add-album" element={<AddAlbum />} />
                     <Route path="/list-albums" element={<ListAlbum />} />
+                    <Route path='/user' element={<ListUsers/>} />
                 </Route>
             </Routes>
         </>
