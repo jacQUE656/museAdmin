@@ -1,7 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { API_BASE_URL } from "../App";
-
 export const AuthContext = createContext();
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -97,7 +96,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     isAuthenticated,
     isAdmin,
-    userRole
+    userRole,
   }
 
   return (

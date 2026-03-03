@@ -6,9 +6,8 @@ export const API_BASE_URL = "http://localhost:2011";
 const App = () => {
   return (
 
-        <>
-        
-        <Toaster position="top-center" />
+        <>        
+         <Toaster position="top-center" />
           <Display/>
         </>
         

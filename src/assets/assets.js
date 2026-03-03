@@ -1,4 +1,4 @@
-import { Folder, FolderPlus, List, Music, User2 } from 'lucide-react';
+import { Folder, FolderPlus, List, Music, User2, UserPlus2 } from 'lucide-react';
 import logo from './musify_logo.png';
 
 export const assets = {
@@ -39,6 +39,12 @@ export const SIDE_MENU_DATA =[
     label: "List User",
     icon : User2,
     path : "/user"
+},
+{
+    id: "06",
+    label: "Create Admin",
+    icon : UserPlus2,
+    path : "/create-admin"
 }    
 
 ];

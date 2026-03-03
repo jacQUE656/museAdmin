@@ -60,11 +60,34 @@ export const albumsAPI = {
     remove:(id) => apiClient.delete(`/api/albums/${id}`)
 }
 export const userAPI = {
-    add: ()=> apiClient.post('/api/user'),
     list: ()=> apiClient.get('/api/user'),
     delete:(id) => apiClient.delete(`/api/user/${id}`)
 }
 
+export const postAdmin = async (firstname, lastname, phonenumber, email, password) => {
+    try {
+        const response = await apiClient.post('/api/user/register-admin', {firstname, lastname, phonenumber, email, password})
+        
+   
+            if (response.status === 200) {
+                return {
+                    success: true,
+                    message: 'Registraton successful'
+                }
+
+            } else {
+                return {
+                    success: false,
+                    message: response.data.message || 'Registraton failed'
+                }
+            }
+        } catch (error) {
+            return {
+                success: false,
+                message: error.response?.data?.message || 'Network Failed'
+            }
+        }
+ }
 
 
 export default apiClient;

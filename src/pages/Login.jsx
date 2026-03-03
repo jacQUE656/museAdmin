@@ -9,15 +9,12 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const { login, isAuthenticated , loading:authLoading } = useAuth();
   
-// if (isAuthenticated) {
-//   return null;
-   
-// }
-  //REDIRECT IF ALREADY AUTHENTICATED
+
 useEffect(()=>{
   if (!authLoading && isAuthenticated()) {
     navigate('/list-songs', {replace: true})
@@ -45,17 +42,17 @@ if (authLoading) {
     }
 
     setLoading(true);
-    try {
-      const result = await login(email, password);
-      if (!result.success) {
+ 
+        try {
+      const result = await login(email , password);
+      if(!result.success){
         toast.error(result.message);
         setError(error.message);
       }
       toast.success(result.message);
-      navigate("/list-songs")
 
     } catch (error) {
-      toast.error(result.message);
+            error.response?.data?.message ? toast.error(error.response.data.message) : toast.error("Network error try again later.")
     } finally {
       setLoading(false);
     }
