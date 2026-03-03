@@ -7,7 +7,7 @@ import { FileText, Image, ImageIcon, Palette, Trash, Trash2 } from "lucide-react
 const ListAlbum = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const admin = localStorage.getItem("adminUser");
   const fetchAlbums = async () => {
     setLoading(true);
     try {
@@ -31,10 +31,13 @@ const ListAlbum = () => {
     }
   }
   useEffect(() => {
-    fetchAlbums();
+    if (admin) {
+      fetchAlbums();
+    }
   }, []);
-
-  return (
+  
+  return admin ? (
+<>
     <DashboardLayout activeMenu="List Album" >
          {loading ? (
         <div className="grid place-items-center min-h-[80vh]">
@@ -154,7 +157,15 @@ const ListAlbum = () => {
         )}
     
     </DashboardLayout>
-  );
+</>
+  ):(
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="text-center">
+          <div className='text-2xl font-bold text-white mb-4'>Access Denied</div>
+    <p className="text-white text-lg">You need admin privilages to access this page</p>
+        </div>
+      </div>
+  )
 };
 
 export default ListAlbum;

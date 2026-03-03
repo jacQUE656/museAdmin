@@ -3,12 +3,14 @@ import DashboardLayout from "../layout/DashboardLayout";
 import { songsAPI } from "../services/ApiService";
 import { Clock, Disc3, Image, Music, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { useAuth } from '../context/AuthContext';
 
 const ListSong = () => {
 
   const [data, setData] = useState([]);
-
+  const admin = localStorage.getItem("adminUser");
   const [loading, setLoading] = useState(false);
+
 
   const fetchSongs = async () => {
     setLoading(true);
@@ -34,11 +36,15 @@ const ListSong = () => {
     }
   }
   useEffect(() => {
-    fetchSongs();
+    if (admin) {
+      fetchSongs();
+    }
   }, []);
 
+  
 
-  return (
+  return admin ? (
+  <>
     <DashboardLayout activeMenu="List Song" >
        {loading ? (
         <div className="grid place-items-center min-h-[80vh]">
@@ -152,7 +158,15 @@ const ListSong = () => {
   
   
     </DashboardLayout>
-  );
+  </>
+  ): (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="text-center">
+          <div className='text-2xl font-bold text-white mb-4'>Access Denied</div>
+    <p className="text-white text-lg">You need admin privilages to access this page</p>
+        </div>
+      </div>
+  )
 };
 
 export default ListSong;

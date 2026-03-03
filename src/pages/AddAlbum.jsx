@@ -6,11 +6,14 @@ import toast from "react-hot-toast";
 
 
 const AddAlbum = () => {
+
+
   const [image, setImage] = useState(false);
   const [color, setColor] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const admin = localStorage.getItem("adminUser");
 
   const onSubmitHandler = async (e) => { 
     e.preventDefault();
@@ -44,7 +47,8 @@ const AddAlbum = () => {
   }
 
 
-  return (
+  return admin ? (
+   <>
     <DashboardLayout activeMenu="Add Album" >
       {/* this  become the children in the dashboardlayout */}
       {loading ? (
@@ -101,6 +105,14 @@ const AddAlbum = () => {
         </form>
       )}
     </DashboardLayout>
+   </>
+  ): (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="text-center">
+          <div className='text-2xl font-bold text-white mb-4'>Access Denied</div>
+    <p className="text-white text-lg">You need admin privilages to access this page</p>
+        </div>
+      </div>
   )
 }
 

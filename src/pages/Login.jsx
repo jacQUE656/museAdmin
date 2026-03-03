@@ -20,7 +20,7 @@ const Login = () => {
   //REDIRECT IF ALREADY AUTHENTICATED
 useEffect(()=>{
   if (!authLoading && isAuthenticated()) {
-    navigate('/add-song', {replace: true})
+    navigate('/list-songs', {replace: true})
   }
   
 } , [authLoading ,isAuthenticated , navigate])
@@ -52,7 +52,7 @@ if (authLoading) {
         setError(error.message);
       }
       toast.success(result.message);
-      navigate("/add-song")
+      navigate("/list-songs")
 
     } catch (error) {
       toast.error(result.message);

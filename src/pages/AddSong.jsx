@@ -14,6 +14,8 @@ const AddSong = () => {
   const [loading, setLoading] = useState(false);
   const [album, setAlbum] = useState("none");
   const [albumData, setAlbumData] = useState([]);
+  const admin = localStorage.getItem("adminUser");
+
 
  const onSubmitHandler = async (e) => { 
     e.preventDefault();
@@ -58,11 +60,14 @@ const AddSong = () => {
     }
   }
   useEffect(() => {
-    loadAlbumData();
+    if (admin) {
+      loadAlbumData();
+    }
 
   }, [])
 
-  return (
+  return admin ? (
+   <>
     <DashboardLayout activeMenu="Add Song" >
       {/* this div become the children in the dashboardlayout */}
       {loading ? (
@@ -139,7 +144,15 @@ const AddSong = () => {
         </form>
       )}
     </DashboardLayout>
-  );
+   </>
+  ): (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+      <div className="text-center">
+          <div className='text-2xl font-bold text-white mb-4'>Access Denied</div>
+    <p className="text-white text-lg">You need admin privilages to access this page</p>
+        </div>
+      </div>
+  )
 };
 
 export default AddSong;

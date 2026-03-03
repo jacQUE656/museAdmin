@@ -21,6 +21,18 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
 
+  useEffect(() => {
+    const storedToken = localStorage.getItem("adminToken");
+    const storedUser = localStorage.getItem("adminUser");
+    const storedUserRole = localStorage.getItem("userRole");
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(storedUser);
+      setUserRole(storedUserRole);
+    }
+    setLoading(false);
+
+  }, [])
 
 
   const login = async (email, password ) => {
@@ -66,7 +78,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const isAuthenticated = () => {
-    return !!token && !!user;
+    return token && user;
   }
 
   const isAdmin = () => {
@@ -74,18 +86,6 @@ export const AuthProvider = ({ children }) => {
   }
   
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("adminToken");
-    const storedUser = localStorage.getItem("adminUser");
-    const storedUserRole = localStorage.getItem("userRole");
-    if (storedToken && storedUser) {
-      setToken(storedToken);
-      setUser(storedUser);
-      setUserRole(storedUserRole);
-    }
-    setLoading(false);
-
-  }, [])
 
 
 
