@@ -70,7 +70,7 @@ if (authLoading) {
         {/* HEADER */}
         <div className="text-center">
           <div className="flex items-center justify-center mb-6">
-            <img src={assets.logo} alt="logo" className="h-12 w-12" />
+            <img src={assets.logo2} alt="logo" className="h-25 w-25" />
             <h1 className="ml-3 text-3xl font-bold text-white">Musify</h1>
           </div>
           <h1 className="ml-3 text-3xl font-bold text-white">Admin</h1>

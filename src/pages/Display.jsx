@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import AddSong from "./AddSong";
-import ListSong from './ListAlbum';
+import ListSong from './ListSong';
 import AddAlbum from './AddAlbum';
 import ListAlbum from './ListAlbum';
 import ListUsers from './ListUsers';
