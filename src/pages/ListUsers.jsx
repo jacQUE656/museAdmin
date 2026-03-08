@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import DashboardLayout from '../layout/DashboardLayout';
 import { Image, Mail, Trash2 } from 'lucide-react';
 import { userAPI } from '../services/ApiService';
+import toast from 'react-hot-toast';
 
 const ListUsers = () => {
 
