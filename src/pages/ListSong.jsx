@@ -45,118 +45,67 @@ const ListSong = () => {
 
   return admin ? (
   <>
-    <DashboardLayout activeMenu="List Song" >
-       {loading ? (
-        <div className="grid place-items-center min-h-[80vh]">
-          <div className="w-16 h-16 place-self-center border-4 border-gray-400 border-t-green-800 rounded-full animate-spin"></div>
+ <DashboardLayout activeMenu="List Song">
+      {loading ? (
+        <div className="grid place-items-center min-h-[50vh]">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
         </div>
-        ) : (
-              <div className="p-6">
-                    {/* Header section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Songs Library
-          </h1>
-          <p className="text-gray-600">Manage your song collection</p>
-        </div>
-
-        {/* TABLE CONTAINER */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          {/* TABLE HEADER */}
-          <div className="bg-gradient-to-r from-[#3be477] to-[#2dd865] px-6 py-4">
-            <div className="grid grid-cols-12 gap-4 items-center text-white font-semibold">
-              <div className="col-span-2 flex items-center gap-2">
-                <Music className="w-4 h-4" />
-                <span>Cover</span>
-              </div>
-              <div className="col-span-3">Song title</div>
-              <div className="col-span-3 flex items-center gap-2">
-                <Disc3 className="w-4 h-4" />
-                <span>Album</span>
-              </div>
-              <div className="col-span-2 flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span>Duration</span>
-              </div>
-              <div className="col-span-2 flex items-center gap-2">
-                Action
-              </div>
-            </div>
+      ) : (
+        <div className="p-4 sm:p-6 w-full">
+          <div className="mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Songs Library</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Manage your song collection</p>
           </div>
 
-          {/* TABLE BODY */}
-          <div className="divide-y divide-gray-100">
-            {data.length === 0 ? (
-              <div className="px-6 py-12 text-center">
-                <Image className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">No songs available yet.</p>
-                <p className="text-gray-400 text-sm">Add songs to get started.</p>
-              </div>
-            ) : (
-              data.map((song, index) => (
-                <div key={index} className="grid grid-cols-12 gap-4 items-center px-6 py-4 hover:bg-gray-50 transition-colors duration-200">
-                  {/* SONG image */}
-                  <div className="col-span-2">
-                    <div className="w-12 h-12 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
-                      <img src={song.image} alt={song.name} className="w-full h-full object-cover" />
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            {/* DESKTOP HEADER (Hidden on mobile) */}
+            <div className="hidden md:grid grid-cols-12 gap-4 items-center bg-green-500 px-6 py-4 text-white font-semibold">
+              <div className="col-span-2">Cover</div>
+              <div className="col-span-3">Song Title</div>
+              <div className="col-span-3">Album</div>
+              <div className="col-span-2">Duration</div>
+              <div className="col-span-2 text-center">Action</div>
+            </div>
+
+            {/* BODY */}
+            <div className="divide-y divide-gray-100">
+              {data.length === 0 ? (
+                <div className="p-12 text-center text-gray-500">No songs available.</div>
+              ) : (
+                data.map((song) => (
+                  <div key={song.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 sm:px-6 hover:bg-gray-50 transition-colors">
+                    {/* Cover & Mobile Info */}
+                    <div className="flex items-center gap-4 col-span-2">
+                      <img src={song.image} alt={song.name} className="w-12 h-12 rounded-lg object-cover shadow-sm" />
+                      <div className="md:hidden flex flex-col">
+                        <span className="font-bold text-gray-900">{song.name}</span>
+                        <span className="text-xs text-gray-500">{song.album}</span>
+                      </div>
+                    </div>
+
+                    {/* Desktop Columns (Hidden on mobile) */}
+                    <div className="hidden md:block col-span-3 font-medium text-gray-900 truncate">{song.name}</div>
+                    <div className="hidden md:block col-span-3 text-gray-600 text-sm truncate">{song.album}</div>
+                    <div className="hidden md:block col-span-2">
+                      <span className="text-xs font-medium px-2 py-1 bg-gray-100 rounded-full">{song.duration}</span>
+                    </div>
+
+                    {/* Action */}
+                    <div className="absolute right-4 md:static col-span-2 flex justify-end md:justify-center">
+                      <button
+                        onClick={() => removeSong(song.id)}
+                        className="p-2 rounded-full bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
-                  {/* SONG NAME */}
-                  <div className="col-span-3">
-                    <p className="font-medium text-gray-900 truncate">
-                      {song.name}
-                    </p>
-                  </div>
-                  {/* SONG ALBUM */}
-                  <div className="col-span-3">
-                    <p className="text-gray-600 truncate">
-                      {song.album}
-                    </p>
-                  </div>
-                  {/* SONG DURATION */}
-                  <div className="col-span-2">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                      {song.duration}
-                    </span>
-                  </div>
-                  {/* ACTION BUTTON */}
-                  <div className="col-span-2 flex justify-center">
-                    <button
-                    onClick={()=>removeSong(song.id)}
-                      title="Delete song"
-                      className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-colors duration-200">
-                      <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-
-          </div>
-        </div>
-        {/* FOOTER */}
-        {data.length > 0 && (
-          <div className="mt-6 bg-gray-50 rounded-lg px-6 py-4">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>
-                Total Songs :_
-                <span className="font-semibold text-gray-900">
-                  {data.length}
-                </span>
-              </span>
-              <span>
-                Last updated
-                <span className="font-semibold text-gray-900">_Just Now</span>
-              </span>
+                ))
+              )}
             </div>
           </div>
-        )}
-      </div>
-
-        )}
-
-  
-  
+        </div>
+      )}
     </DashboardLayout>
   </>
   ): (

@@ -46,74 +46,82 @@ const AddAlbum = () => {
     }
   }
 
-
-  return admin ? (
-   <>
-    <DashboardLayout activeMenu="Add Album" >
-      {/* this  become the children in the dashboardlayout */}
+return admin ? (
+    <DashboardLayout activeMenu="Add Album">
       {loading ? (
-        <div className="grid place-items-center min-h-[80vh]">
-          <div className="w-16 h-16 place-self-center border-4 border-gray-400 border-t-green-800 rounded-full animate-spin"></div>
+        <div className="grid place-items-center min-h-[50vh]">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
         </div>
       ) : (
-        <form className="flex flex-col items-start gap-8 text-gray-600 mt-5" onSubmit={onSubmitHandler}>
-          {/* ADDING IMAGE */}
-          <div className="flex flex-col gap-4">
-            <p>Upload Image</p>
-            <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" accept="image/" hidden />
-            <label htmlFor="image" className="flex flex-col items-center justify-center w-16 h-16 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-green-400 transition-colors overflow-hidden">
+        <form className="flex flex-col gap-6 text-gray-700 mt-5 p-2" onSubmit={onSubmitHandler}>
+          
+          {/* UPLOAD IMAGE */}
+          <div className="flex flex-col gap-2">
+            <p className="font-medium text-sm">Upload Image</p>
+            <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" accept="image/*" hidden />
+            <label htmlFor="image" className="flex items-center justify-center w-20 h-20 border-2 border-dashed border-gray-400 rounded-xl cursor-pointer hover:border-green-500 transition-all overflow-hidden bg-gray-50">
               {image ? (
-                <img src={URL.createObjectURL(image)} alt="Preview" className="w-full h-full object-cover rounded-lg" />
-              ) : (<Image className="h-8 w-8 text-gray-500" />)}
+                <img src={URL.createObjectURL(image)} alt="Preview" className="w-full h-full object-cover" />
+              ) : (
+                <Image className="h-8 w-8 text-gray-400" />
+              )}
             </label>
           </div>
 
           {/* ALBUM NAME */}
-          <div className="flex flex-col gap-2.5">
-            <p>Album name</p>
-            <input type="text"
-              className="bg-transparent outline-green-600 border-2 border-gray-400 p-2.5 w-[max(40vw , 250px)]"
-              placeholder="type here"
+          <div className="flex flex-col gap-2 w-full max-w-[500px]">
+            <p className="font-medium text-sm">Album Name</p>
+            <input 
+              type="text"
+              className="bg-transparent outline-none border border-gray-300 rounded p-3 focus:border-green-600 focus:ring-1 focus:ring-green-600 transition-all"
+              placeholder="Enter album name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
           {/* ALBUM DESCRIPTION */}
-          <div className="flex flex-col gap-2.5">
-            <p>Album description</p>
-            <input type="text"
-              className="bg-transparent outline-green-600 border-2 border-gray-400 p-2.5 w-[max(40vw , 250px)]"
-              placeholder="type here"
+          <div className="flex flex-col gap-2 w-full max-w-[500px]">
+            <p className="font-medium text-sm">Album Description</p>
+            <input 
+              type="text"
+              className="bg-transparent outline-none border border-gray-300 rounded p-3 focus:border-green-600 focus:ring-1 focus:ring-green-600 transition-all"
+              placeholder="Enter description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </div>
 
-          {/* ALBUM BG COLOR */}
-          <div className="flex flex-col gap-3">
-            <p>Background colour</p>
-            <input type="color"
+          {/* BACKGROUND COLOR */}
+          <div className="flex flex-col gap-2">
+            <p className="font-medium text-sm">Background Colour</p>
+            <input 
+              type="color"
+              className="h-10 w-20 cursor-pointer rounded border-none"
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />
           </div>
+
           {/* SUBMIT BUTTON */}
-                <button type="submit" className="text-base bg-[#3be477] text-white py-2.5 px-14 cursor-pointer">
-                  ADD
-                </button>
+          <button 
+            type="submit" 
+            className="w-full max-w-[500px] bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors shadow-md"
+          >
+            ADD ALBUM
+          </button>
         </form>
       )}
     </DashboardLayout>
-   </>
-  ): (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+  ) : (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
       <div className="text-center">
-          <div className='text-2xl font-bold text-white mb-4'>Access Denied</div>
-    <p className="text-white text-lg">You need admin privilages to access this page</p>
-        </div>
+        <div className='text-2xl font-bold text-white mb-2'>Access Denied</div>
+        <p className="text-gray-300">You need admin privileges to access this page.</p>
       </div>
-  )
-}
-
+    </div>
+  );
+};
 export default AddAlbum;

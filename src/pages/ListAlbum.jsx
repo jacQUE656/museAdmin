@@ -39,124 +39,70 @@ const ListAlbum = () => {
   
   return admin ? (
 <>
-    <DashboardLayout activeMenu="List Album" >
-         {loading ? (
-        <div className="grid place-items-center min-h-[80vh]">
-          <div className="w-16 h-16 place-self-center border-4 border-gray-400 border-t-green-800 rounded-full animate-spin"></div>
+  <DashboardLayout activeMenu="List Album">
+      {loading ? (
+        <div className="grid place-items-center min-h-[50vh]">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
         </div>
-        ) : (
-            <div className="p-5">
-        {/* Header section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Albums Library
-          </h1>
-          <p className="text-gray-600">Manage your album collection</p>
-        </div>
+      ) : (
+        <div className="p-4 sm:p-6 w-full">
+          <div className="mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Albums Library</h1>
+            <p className="text-gray-600 text-sm sm:text-base">Manage your album collection</p>
+          </div>
 
-        {/* TABLE CONTAINER */}
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-          {/* TABLE HEADER */}
-          <div className="bg-gradient-to-r from-[#3be477] to-[#2dd865] px-6 py-4">
-            <div className="grid grid-cols-12 gap-4 items-center text-white font-semibold">
-              <div className="col-span-2 flex items-center gap-2">
-                <Image className="w-4 h-4" />
-                <span>Cover</span>
-              </div>
+          {/* TABLE / CARD CONTAINER */}
+          <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+            
+            {/* DESKTOP HEADER (Hidden on mobile) */}
+            <div className="hidden md:grid grid-cols-12 gap-4 items-center bg-green-500 px-6 py-4 text-white font-semibold">
+              <div className="col-span-2">Cover</div>
               <div className="col-span-3">Album Name</div>
-              <div className="col-span-3 flex items-center gap-2">
-                <FileText className="w-4 h-4" />
-                <span>Description</span>
-              </div>
-              <div className="col-span-2 flex items-center gap-2">
-                <Palette className="w-4 h-4" />
-                <span>Theme</span>
-              </div>
-              <div className="col-span-2 flex items-center gap-2">
-                Action
-              </div>
+              <div className="col-span-3">Description</div>
+              <div className="col-span-2">Theme</div>
+              <div className="col-span-2 text-center">Action</div>
             </div>
-          </div>
 
-          {/* TABLE BODY */}
-          <div className="divide-y divide-gray-100">
-            {data.length === 0 ? (
-              <div className="px-6 py-12 text-center">
-                <Image className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 text-lg">No albums available yet.</p>
-                <p className="text-gray-400 text-sm">Add albums to get started.</p>
-              </div>
-            ) : (
-              data.map((album, index) => (
-                <div key={index} className="grid grid-cols-12 gap-4 items-center px-6 py-4 hover:bg-gray-50 transition-colors duration-200">
-                  {/* Album image */}
-                  <div className="col-span-2">
-                    <div className="w-12 h-12 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
-                      <img src={album.imageUrl} alt={album.name} className="w-full h-full object-cover" />
-                    </div>
-                  </div>
-                  {/* ALBUM NAME */}
-                  <div className="col-span-3">
-                    <p className="font-medium text-gray-900 truncate">
-                      {album.name}
-                    </p>
-                  </div>
-                  {/* ALBUM DESCRIPTION */}
-                  <div className="col-span-3">
-                    <p className="text-gray-600 truncate">
-                      {album.description || "No description"}
-                    </p>
-                  </div>
-                  {/* ALBUM COLOR */}
-                  <div className="col-span-2">
-                    <div className="flex items-center gap-2">
-                      <div
-                        style={{ backgroundColor: album.bgColor }}
-                        title={`Theme color: ${album.bgColor}`}
-                        className="w-6 h-6 rounded-full border-2 border-gray-300 shadow-sm">
+            {/* BODY */}
+            <div className="divide-y divide-gray-100">
+              {data.length === 0 ? (
+                <div className="p-12 text-center text-gray-500">No albums available.</div>
+              ) : (
+                data.map((album) => (
+                  <div key={album.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center p-4 sm:px-6 hover:bg-gray-50 transition-colors">
+                    {/* Cover & Mobile Info */}
+                    <div className="flex items-center gap-4 col-span-2">
+                      <img src={album.imageUrl} alt={album.name} className="w-12 h-12 rounded-lg object-cover shadow-sm" />
+                      <div className="md:hidden flex flex-col">
+                        <span className="font-bold text-gray-900">{album.name}</span>
+                        <span className="text-xs text-gray-500">{album.bgColor}</span>
                       </div>
-                      <span className="text-xs text-gray-500 font-mono">
-                        {album.bgColor}
-                      </span>
+                    </div>
+
+                    {/* Desktop Columns (Hidden on mobile) */}
+                    <div className="hidden md:block col-span-3 font-medium text-gray-900 truncate">{album.name}</div>
+                    <div className="hidden md:block col-span-3 text-gray-600 text-sm truncate">{album.description || "No description"}</div>
+                    <div className="hidden md:flex items-center gap-2 col-span-2">
+                      <div className="w-6 h-6 rounded-full border border-gray-200" style={{ backgroundColor: album.bgColor }}></div>
+                      <span className="text-xs font-mono">{album.bgColor}</span>
+                    </div>
+
+                    {/* Action */}
+                    <div className="absolute right-4 md:static col-span-2 flex justify-end md:justify-center">
+                      <button
+                        onClick={() => removeAlbum(album.id)}
+                        className="p-2 rounded-full bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
-                  {/* ACTION BUTTON */}
-                  <div className="col-span-2 flex justify-center">
-                    <button
-                    onClick={() =>removeAlbum(album.id)}
-                    title="Delete Album"
-                    className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 transition-colors duration-200">
-                        <Trash2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200"/>
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-
+                ))
+              )}
+            </div>
           </div>
         </div>
-
-        {/* FOOTER */}
-        {data.length > 0 &&(
-          <div className="mt-6 bg-gray-50 rounded-lg px-6 py-4">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>
-                Total Albums :_ 
-                <span className="font-semibold text-gray-900">
-                  {data.length}
-                </span>
-              </span>
-              <span>
-                Last updated
-                 <span className="font-semibold text-gray-900">_Just Now</span>
-              </span>
-            </div>
-          </div>
-        )}
-
-      </div>
-        )}
-    
+      )}
     </DashboardLayout>
 </>
   ):(

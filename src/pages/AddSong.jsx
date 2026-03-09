@@ -68,67 +68,72 @@ const AddSong = () => {
 
   return admin ? (
    <>
-    <DashboardLayout activeMenu="Add Song" >
-      {/* this div become the children in the dashboardlayout */}
+   <DashboardLayout activeMenu="Add Song">
       {loading ? (
-        <div className="grid place-items-center min-h-[80vh]">
-          <div className="w-16 h-16 place-self-center border-4 border-gray-400 border-t-green-800 rounded-full animate-spin"></div>
+        <div className="grid place-items-center min-h-[50vh]">
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-green-600 rounded-full animate-spin"></div>
         </div>
       ) : (
-        <form className="flex flex-col items-start gap-8 text-gray-600 mt-5" onSubmit={onSubmitHandler}>
-          <div className="flex gap-8">
-
-            {/* ADDING SONG */}
-            <div className="flex flex-col gap-4">
-              <p>Upload song</p>
-              <input onChange={(e) => setSong(e.target.files[0])} type="file" id="song" accept="audio/" hidden />
-              <label htmlFor="song" className="flex flex-col items-center justify-center w-16 h-16 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-green-400 transition-colors overflow-hidden">
-                {song ? (
-                  <Check className="h-8 w-8 text-gray-500" />
-                ) : (<Music className="h-8 w-8 text-gray-500" />)}
+        <form className="flex flex-col gap-6 text-gray-700 mt-5 p-2" onSubmit={onSubmitHandler}>
+          
+          {/* UPLOAD SECTIONS */}
+          <div className="flex flex-wrap gap-6">
+            {/* SONG UPLOAD */}
+            <div className="flex flex-col gap-2">
+              <p className="font-medium text-sm">Upload Song</p>
+              <input onChange={(e) => setSong(e.target.files[0])} type="file" id="song" accept="audio/*" hidden />
+              <label htmlFor="song" className="flex items-center justify-center w-20 h-20 border-2 border-dashed border-gray-400 rounded-xl cursor-pointer hover:border-green-500 transition-all bg-gray-50">
+                {song ? <Check className="h-8 w-8 text-green-500" /> : <Music className="h-8 w-8 text-gray-400" />}
               </label>
             </div>
 
-            {/* ADDING IMAGE */}
-            <div className="flex flex-col gap-4">
-              <p>Upload Image</p>
-              <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" accept="image/" hidden />
-              <label htmlFor="image" className="flex flex-col items-center justify-center w-16 h-16 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-green-400 transition-colors overflow-hidden">
+            {/* IMAGE UPLOAD */}
+            <div className="flex flex-col gap-2">
+              <p className="font-medium text-sm">Upload Image</p>
+              <input onChange={(e) => setImage(e.target.files[0])} type="file" id="image" accept="image/*" hidden />
+              <label htmlFor="image" className="flex items-center justify-center w-20 h-20 border-2 border-dashed border-gray-400 rounded-xl cursor-pointer hover:border-green-500 transition-all bg-gray-50 overflow-hidden">
                 {image ? (
-                  <img src={URL.createObjectURL(image)} alt="Preview" className="w-full h-full object-cover rounded-lg" />
-                ) : (<Image className="h-8 w-8 text-gray-500" />)}
+                  <img src={URL.createObjectURL(image)} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <Image className="h-8 w-8 text-gray-400" />
+                )}
               </label>
             </div>
           </div>
 
-          {/* ALBUM NAME */}
-          <div className="flex flex-col gap-2.5">
-            <p>Song name</p>
-            <input type="text"
-              className="bg-transparent outline-green-600 border-2 border-gray-400 p-2.5 w-[max(40vw , 250px)]"
-              placeholder="type here"
+          {/* INPUT FIELDS */}
+          <div className="flex flex-col gap-2 w-full max-w-[500px]">
+            <p className="font-medium text-sm">Song Name</p>
+            <input 
+              type="text"
+              className="bg-transparent outline-none border border-gray-300 rounded p-3 focus:border-green-600 transition-all"
+              placeholder="Enter song name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
           </div>
 
-          {/* SONg DESCRIPTION */}
-          <div className="flex flex-col gap-2.5">
-            <p>Song description</p>
-            <input type="text"
-              className="bg-transparent outline-green-600 border-2 border-gray-400 p-2.5 w-[max(40vw , 250px)]"
-              placeholder="type here"
+          <div className="flex flex-col gap-2 w-full max-w-[500px]">
+            <p className="font-medium text-sm">Song Description</p>
+            <input 
+              type="text"
+              className="bg-transparent outline-none border border-gray-300 rounded p-3 focus:border-green-600 transition-all"
+              placeholder="Enter description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </div>
-          {/* ALBUMS */}
-          <div className="flex flex-col gap-2.5">
-            <p>Album</p>
+
+          {/* ALBUM SELECT */}
+          <div className="flex flex-col gap-2">
+            <p className="font-medium text-sm">Album</p>
             <select
               defaultValue={album}
               onChange={(e) => setAlbum(e.target.value)}
-              className="bg-transparent outline-green-600 border-3 border-gray-400 p-2.5 w-[150px]">
+              className="bg-transparent outline-none border border-gray-300 rounded p-3 w-full max-w-[200px] focus:border-green-600 cursor-pointer"
+            >
               <option value="none">None</option>
               {albumData.map((album, index) => (
                 <option value={album.name} key={index}>{album.name}</option>
@@ -136,10 +141,11 @@ const AddSong = () => {
             </select>
           </div>
 
-
-          {/* SUBMIT BUTTON */}
-          <button type="submit" className="text-base bg-[#3be477] text-white py-2.5 px-14 cursor-pointer">
-            ADD
+          <button 
+            type="submit" 
+            className="w-full max-w-[500px] bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-colors shadow-md"
+          >
+            ADD SONG
           </button>
         </form>
       )}
