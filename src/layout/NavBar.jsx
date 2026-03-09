@@ -34,9 +34,9 @@ const NavBar = ({ activeMenu }) => {
           )}
         </button>
         <div className="flex items-center gap-2">
-          <img src={assets.logo} alt="logo" className="w-12 h-12" />
+          <img src={assets.logo2} alt="logo" className="w-12 h-12" />
           <span className="text-2xl font-bold text-black truncate">
-            Musify
+            MUSE
           </span>
         </div>
       </div>
